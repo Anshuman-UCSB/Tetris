@@ -24,7 +24,7 @@ export default function Grid( { squares } ) {
 
 function Square({ color_ind }){
   let colors = {
-    "bg":"505050",
+    "bg":"#505050",
     "I":"blue",
     "O":"yellow",
     "T":"magenta",
