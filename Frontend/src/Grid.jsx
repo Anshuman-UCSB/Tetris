@@ -24,14 +24,14 @@ export default function Grid( { squares } ) {
 
 function Square({ color_ind }){
   let colors = {
-    "bg":"#241023",
-    "I":"#480B14",
-    "O":"#6B0504",
-    "T":"#A3320B",
-    "J":"#D5E68D",
-    "L":"#8EC359",
-    "S":"#47A025",
-    "Z":"red",
+    "bg":"#404E4D",
+    "I":"#5BC0EB",
+    "O":"#FDE74C",
+    "T":"#9BC53D",
+    "J":"#C3423F",
+    "L":"#91818A",
+    "S":"#CA895F",
+    "Z":"#CA3CFF",
   };
   return (
     <div style={{backgroundColor: colors[color_ind]}} className='square'/>
