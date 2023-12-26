@@ -25,6 +25,7 @@ function App() {
       }
   }
 
+  const tickDuration = 1000 // milliseconds 
   useEffect(() => {
     const createNewGame = async () => {
       const data = await request("game", {method: "PUT"})
@@ -32,6 +33,14 @@ function App() {
       setGameId(data['game_id']);
     };
     createNewGame();
+
+    const handleTick = () => {
+      fetchData(true)
+    }
+
+    const intervalId = setInterval(handleTick, tickDuration);
+
+    return () => clearInterval(intervalId)
   }, []);
 
   const fetchData = useCallback(async (tick) =>  {
