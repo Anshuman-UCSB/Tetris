@@ -27,6 +27,13 @@ def get_game(game_id: int):
 		return {"error": f"game id {game_id} doesn't exist."}
 	return {"message":"success", "game_id":game_id, "game":games[game_id]}
 
+@app.get("/tick")
+def tick_game(game_id: int):
+	if game_id not in games:
+		return {"error": f"game id {game_id} doesn't exist."}
+	games[game_id].tick()
+	return {"message":"success", "game_id":game_id, "game":games[game_id]}
+
 @app.put("/game")
 def create_game(game_id: Union[int, None] = None):
 	global n_uid

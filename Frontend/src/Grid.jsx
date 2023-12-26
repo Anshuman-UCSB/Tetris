@@ -30,7 +30,13 @@ export default function Grid( { squares } ) {
 function Square({ color_ind }){
   let colors = {
     "bg":"505050",
-    'Z':'red',
+    "I":"blue",
+    "O":"yellow",
+    "T":"magenta",
+    "J":"darkblue",
+    "L":"orange",
+    "S":"green",
+    "Z":"red",
   };
   return (
     <div style={{backgroundColor: colors[color_ind]}} className='square'/>
