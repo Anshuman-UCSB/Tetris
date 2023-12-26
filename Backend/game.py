@@ -2,8 +2,8 @@ from random import shuffle
 class Game:
 	def __init__(self):
 		self.grid = [[[0,"bg"] for _ in range(10)] for _ in range(20)]
-		for i,p in enumerate("IOTJLSZ"):
-			self.grid[0][i] = (0,p)
+		# for i,p in enumerate("IOTJLSZ"):
+		# 	self.grid[0][i] = (0,p)
 		self.activePiece = []
 		self.activeType = None
 		self.center = None
@@ -38,14 +38,14 @@ class Game:
 				self.activePiece = [(5,0),(6,0),(5,1),(6,1)]
 				self.center = [5.5,.5]
 			case "T":
-				self.activePiece = [(5,0),(6,0),(4,0),(5,1)]
-				self.center = [5,0]
+				self.activePiece = [(5,1),(6,1),(4,1),(5,0)]
+				self.center = [5,1]
 			case "J":
-				self.activePiece = [(5,0),(6,0),(4,0),(6,1)]
-				self.center = [5,0]
+				self.activePiece = [(5,1),(6,1),(4,1),(6,0)]
+				self.center = [5,1]
 			case "L":
-				self.activePiece = [(5,0),(6,0),(4,0),(4,1)]
-				self.center = [5,0]
+				self.activePiece = [(5,1),(6,1),(4,1),(4,0)]
+				self.center = [5,1]
 			case "Z":
 				self.activePiece = [(5,0),(4,0),(5,1),(6,1)]
 				self.center = [5,1]

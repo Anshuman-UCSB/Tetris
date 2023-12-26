@@ -8,9 +8,12 @@ function App() {
   const [squares, setSquares] = useState(Array(20).fill(Array(10).fill("bg")));
   const [alive, setAlive] = useState(true)
   const [nextPiece, setNextPiece] = useState("")
+  const [pressedKeys, setPressedKeys] = useState({});
+  const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
 
   const backend_url = 'http://localhost:8000/';
   const tickDuration = 500 // milliseconds 
+  const keyPollDuration = 50 // milliseconds 
 
   const updateGrid = (data) => {
     const nextSquares = squares.map(row => [...row]);
@@ -68,33 +71,68 @@ function App() {
     
     if(alive){
       window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('keyup', handleKeyUp);
     }
     const handleTick = () => {
-      // if (alive) fetchData(true)
+      if (alive) fetchData(true)
     }
 
     const intervalId = setInterval(handleTick, tickDuration);
     return () => {
       clearInterval(intervalId)
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
     };
   }, [gameId, alive, nextPiece]);
 
+  useEffect(() => {
+    const handleInputs = () => {
+      console.log("inputs:", pressedKeys)
+      if (pressedKeys[37] || keyFlags[37]){
+        makeAction(3);
+        keyFlags[37] = false;
+      } else if (pressedKeys[39] || keyFlags[39]){
+        makeAction(1);
+        keyFlags[39] = false;
+      } else if (pressedKeys[40] || keyFlags[40]){
+        fetchData(true);
+        keyFlags[40] = false;
+      }
+    };
+    const intervalId = setInterval(handleInputs, keyPollDuration);
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [pressedKeys]);
+
+  const handleKeyUp = (event) => {
+    setPressedKeys((prev) => ({...prev, [event.keyCode]: false}));
+  }
   const handleKeyDown = (event) => {
-    console.log(gameId);
+    if(event.repeat) return
     console.log("event pressed: "+event.key+" and "+event.keyCode);
 
+    if ([37,39,40].includes(event.keyCode)){
+      setPressedKeys((prev) => ({ ...prev, [event.keyCode]:true }));
+      const newFlags = keyFlags.slice();
+      newFlags[event.keyCode]=true;
+      setKeyFlags(newFlags);
+    }
     if (event.key === "ArrowLeft" || event.keyCode === 37){
       console.log("Left pressed");
-      makeAction(3);
+      // makeAction(3);
     }
     if (event.key === "ArrowRight" || event.keyCode === 39){
       console.log("Right pressed");
-      makeAction(1);
+      if(!pressedKeys[event.keyCode])
+        setPressedKeys((prev) => ({ ...prev, [event.keyCode]:true }));
+      // makeAction(1);
     }
     if (event.key === "ArrowDown" || event.keyCode === 40){
       console.log("Down pressed");
-      fetchData(true);
+      // fetchData(true);
+      if(!pressedKeys[event.keyCode])
+        setPressedKeys((prev) => ({ ...prev, [event.keyCode]:true }));
     }
     if (event.key === "ArrowUp" || event.keyCode === 38){
       console.log("Up pressed");
