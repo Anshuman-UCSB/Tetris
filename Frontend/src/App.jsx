@@ -21,7 +21,7 @@ function Debug( { debug }) {
 
 function App() {
   const [gameId, setGameId] = useState(null);
-  const [squares, setSquares] = useState(Array(20).fill(Array(10).fill(0)));
+  const [squares, setSquares] = useState(Array(20).fill(Array(10).fill("bg")));
   let error = null;
   let debug = null;
   const backend_url = 'http://localhost:8000/';
@@ -48,14 +48,15 @@ function App() {
         const response = await fetch(backend_url+`game?game_id=${gameId}`);
         console.log("fetching with gameId",gameId);
         const data = await response.json();
-        const nextSquares = squares.slice();
+        const nextSquares = squares.map(row => [...row]);
         for(let y = 0;y<20;y++){
           for(let x = 0;x<10;x++){
-            // console.log(x,y);
             nextSquares[y][x] = data['game']['grid'][y][x][1];
+            console.log(x,y,data['game']['grid'][y][x], nextSquares[y][x]);
           }
+          console.log("next:",nextSquares[0][0]);
         }
-        console.log("next:",nextSquares);
+        
         console.log("data:",data);
         setSquares(nextSquares);
       } catch (err) {
