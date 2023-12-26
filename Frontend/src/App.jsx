@@ -34,17 +34,24 @@ function App() {
       setGameId(data.game_id);
     };
     createNewGame();
-
   }, []);
 
   const fetchData = useCallback(async (tick) =>  {
-      if(gameId === null){
-        console.log("not fetching null game");
-        return null;
-      }
-      const data = await request(`${tick ? "tick":"game"}?game_id=${gameId}`, {})
-      updateGrid(data);
-    }, [gameId]);
+    if(gameId === null){
+      console.log("not fetching null game");
+      return null;
+    }
+    const data = await request(`${tick ? "tick":"game"}?game_id=${gameId}`, {})
+    updateGrid(data);
+  }, [gameId]);
+  const makeAction = useCallback(async (action) =>  {
+    if(gameId === null){
+      console.log("not acting on null game");
+      return null;
+    }
+    const data = await request(`action?game_id=${gameId}&action=${action}`, {method: "PUT"})
+    updateGrid(data);
+  }, [gameId]);
 
   useEffect(() => {
     console.log("fetching game "+gameId);
@@ -56,7 +63,6 @@ function App() {
     }
 
     const intervalId = setInterval(handleTick, tickDuration);
-
     return () => {
       clearInterval(intervalId)
       window.removeEventListener('keydown', handleKeyDown);
@@ -69,17 +75,19 @@ function App() {
 
     if (event.key === "ArrowLeft" || event.keyCode === 37){
       console.log("Left pressed");
+      makeAction(3);
     }
     if (event.key === "ArrowRight" || event.keyCode === 39){
       console.log("Right pressed");
+      makeAction(1);
     }
     if (event.key === "ArrowDown" || event.keyCode === 40){
       console.log("Down pressed");
+      fetchData(true);
     }
     if (event.key === "ArrowUp" || event.keyCode === 38){
       console.log("Up pressed");
     }
-    fetchData(true);
   };
 
 

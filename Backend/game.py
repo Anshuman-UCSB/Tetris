@@ -13,7 +13,37 @@ class Game:
 		self.grid[1][5] = [1,"O"]
 		self.grid[1][6] = [1,"O"]
 	def left(self):
-		...
+		def canMoveLeft():
+			for y in range(20):
+				if self.grid[y][0][0] == 1:
+					return False
+				for x in range(1,10):
+					if self.grid[y][x][0] == 1:
+						if self.grid[y][x-1][1] != 'bg':
+							return False
+						break
+			return True
+		if canMoveLeft():
+			for y in range(20):
+				for x in range(0,9):
+					if self.grid[y][x+1][0] == 1:
+						self.grid[y][x+1],self.grid[y][x]=self.grid[y][x],self.grid[y][x+1]
+	def right(self):
+		def canMoveRight():
+			for y in range(20):
+				if self.grid[y][0][0] == 1:
+					return False
+				for x in range(9,0,-1):
+					if self.grid[y][x][0] == 1:
+						if self.grid[y][x+1][1] != 'bg':
+							return False
+						break
+			return True
+		if canMoveRight():
+			for y in range(20):
+				for x in range(9,0,-1):
+					if self.grid[y][x-1][0] == 1:
+						self.grid[y][x-1],self.grid[y][x]=self.grid[y][x],self.grid[y][x-1]
 	def tick(self):
 		if not self.activePiece:
 			self.createPiece()

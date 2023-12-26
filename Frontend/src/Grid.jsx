@@ -24,13 +24,13 @@ export default function Grid( { squares } ) {
 
 function Square({ color_ind }){
   let colors = {
-    "bg":"#505050",
-    "I":"blue",
-    "O":"yellow",
-    "T":"magenta",
-    "J":"darkblue",
-    "L":"orange",
-    "S":"green",
+    "bg":"#241023",
+    "I":"#480B14",
+    "O":"#6B0504",
+    "T":"#A3320B",
+    "J":"#D5E68D",
+    "L":"#8EC359",
+    "S":"#47A025",
     "Z":"red",
   };
   return (
