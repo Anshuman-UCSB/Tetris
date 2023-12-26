@@ -62,7 +62,7 @@ function App() {
     
     window.addEventListener('keydown', handleKeyDown);
     const handleTick = () => {
-      fetchData(true)
+      if (alive) fetchData(true)
     }
 
     const intervalId = setInterval(handleTick, tickDuration);
@@ -70,7 +70,7 @@ function App() {
       clearInterval(intervalId)
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [gameId]);
+  }, [gameId, alive]);
 
   const handleKeyDown = (event) => {
     console.log(gameId);

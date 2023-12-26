@@ -15,6 +15,7 @@ class Game:
 		shuffle(choices)
 		return choices
 	def createPiece(self):
+		self.groundedTime = 2
 		self.activeType = self.nextPieces.pop(0)
 		if len(self.nextPieces) < 7:
 			self.nextPieces+=self.pieceBag()
@@ -78,6 +79,7 @@ class Game:
 			self.grid[y][x] = [1, self.activeType]
 		self.createPiece()
 		self.render()
+
 	def tick(self):
 		if not self.activePiece:
 			self.createPiece()
