@@ -21,6 +21,7 @@ function App() {
     }
     setSquares(nextSquares);
     setAlive(data.game.alive);
+    setNextPiece(data.game.nextPieces[0])
   }
   
   const request = async (endpoint, data) => {
@@ -38,7 +39,7 @@ function App() {
       return null;
     }
     const data = await request(`${tick ? "tick":"game"}?game_id=${gameId}`, {})
-    setNextPiece(data.game.nextPieces[0])
+    
     updateGrid(data);
   }, [gameId]);
 
@@ -77,7 +78,7 @@ function App() {
       clearInterval(intervalId)
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [gameId, alive]);
+  }, [gameId, alive, nextPiece]);
 
   const handleKeyDown = (event) => {
     console.log(gameId);
@@ -112,7 +113,7 @@ function App() {
       {
         alive && <div className="game-container">
           <Grid squares = {squares}/>
-          <NextPiece nextPiece={nextPiece}/>
+          <NextPiece nextPiece={nextPiece} />
         </div>
       }
       {

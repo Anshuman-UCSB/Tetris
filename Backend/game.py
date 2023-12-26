@@ -6,6 +6,7 @@ class Game:
 			self.grid[0][i] = (0,p)
 		self.activePiece = []
 		self.activeType = None
+		self.center = None
 		self.alive = True
 		self.nextPieces = self.pieceBag()
 		self.groundedTime = 2
@@ -14,16 +15,13 @@ class Game:
 		choices = list("IOTJLSZ")
 		shuffle(choices)
 		return choices
+	def rotatePoint(self, point, center):
+		x,y = point
+		cx,cy = center
+		return (int(cx-(y-cy)),int((x-cx)+cy))
 	def rotate2x3(self, piece):
-		center = [[10,0],[10,0]]
-		for x,y in piece:
-			center[0][0] = min(center[0][0], x)
-			center[0][1] = max(center[0][1], x)
-			center[1][0] = min(center[1][0], y)
-			center[1][1] = max(center[1][1], y)
-		cx = sum(center[0])/2
-		cy = sum(center[1])/2
-		self.activePiece = [(int(cx-(y-cy)),int((x-cx)+cy)) for x,y in self.activePiece]
+		print(piece, self.center)
+		self.activePiece = [self.rotatePoint(p, self.center) for p in self.activePiece]
 	def rotate(self):
 		self.rotate2x3(self.activePiece)
 		self.render()
@@ -35,20 +33,28 @@ class Game:
 		match(self.activeType):
 			case "I":
 				self.activePiece = [(5,0),(6,0),(7,0),(4,0)]
+				self.center = [5.5,0.5]
 			case "O":
 				self.activePiece = [(5,0),(6,0),(5,1),(6,1)]
+				self.center = [5.5,.5]
 			case "T":
 				self.activePiece = [(5,0),(6,0),(4,0),(5,1)]
+				self.center = [5,0]
 			case "J":
 				self.activePiece = [(5,0),(6,0),(4,0),(6,1)]
+				self.center = [5,0]
 			case "L":
 				self.activePiece = [(5,0),(6,0),(4,0),(4,1)]
+				self.center = [5,0]
 			case "Z":
-				self.activePiece = [(5,0),(6,0),(5,1),(4,1)]
-			case "S":
 				self.activePiece = [(5,0),(4,0),(5,1),(6,1)]
+				self.center = [5,1]
+			case "S":
+				self.activePiece = [(5,0),(6,0),(5,1),(4,1)]
+				self.center = [5,1]
 			case _:
 				self.activePiece = [(4,0),(5,0),(6,0),(5,1),(5,2)]
+				self.center = [0,0]
 		for x,y in self.activePiece:
 			if self.grid[y][x][0] != 0:
 				self.alive = False
@@ -68,6 +74,7 @@ class Game:
 						self.grid[y][x] = [3,'g']
 					if (x,y) in self.activePiece:
 						self.grid[y][x] = [2,self.activeType]
+		print(self.activePiece)
 	def canMoveLeft(self):
 		return all(x > 0 and self.grid[y][x-1][0]!=1 for x,y in self.activePiece)
 	def canMoveRight(self):
@@ -78,10 +85,12 @@ class Game:
 	def left(self):
 		if self.canMoveLeft():
 			self.activePiece = [(x-1,y) for x,y in self.activePiece]
+			self.center[0]-=1
 			self.render()
 	def right(self):
 		if self.canMoveRight():
 			self.activePiece = [(x+1,y) for x,y in self.activePiece]
+			self.center[0]+=1
 			self.render()
 	def drop(self):
 		for x,y in self.activePiece:
@@ -101,6 +110,7 @@ class Game:
 			if self.canMoveDown():
 				self.groundedTime = 2
 				self.activePiece = [(x,y+1) for x,y in self.activePiece]
+				self.center[1]+=1
 				self.render()
 			else:
 				if self.groundedTime == 0:

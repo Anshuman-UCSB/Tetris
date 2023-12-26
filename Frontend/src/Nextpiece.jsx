@@ -1,11 +1,11 @@
 
 
-export default function NextPiece(props) {
+export default function NextPiece({ nextPiece, children }) {
 
     return (
         <>
             <div className="next">
-                <p>Next: {props.NextPiece}</p>
+                <p>Next: {nextPiece}</p>
             </div>
         </>
     )
