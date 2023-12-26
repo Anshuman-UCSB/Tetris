@@ -3,11 +3,6 @@ import './Grid.css'
 
 
 export default function Grid( { squares } ) {
-
-  function updateSquares(Game){
-    console.log(fetchData());
-  }
-
   let dims = [10,20];
   const generateKey = (row, col) => `${row}-${col}`;
   const renderGrid = () => {
