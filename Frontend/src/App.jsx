@@ -8,9 +8,10 @@ function App() {
   const backend_url = 'http://localhost:8000/';
   const updateGrid = (data) => {
     const nextSquares = squares.map(row => [...row]);
+    console.log(data.game)
     for(let y = 0;y<20;y++){
       for(let x = 0;x<10;x++){
-        nextSquares[y][x] = data['game']['grid'][y][x][1];
+        nextSquares[y][x] = data.game.grid[y][x][1];
       }
     }
     setSquares(nextSquares);
@@ -29,18 +30,11 @@ function App() {
   useEffect(() => {
     const createNewGame = async () => {
       const data = await request("game", {method: "PUT"})
-      console.log("setting game id", data['game_id'])
-      setGameId(data['game_id']);
+      console.log("setting game id", data.game_id)
+      setGameId(data.game_id);
     };
     createNewGame();
 
-    const handleTick = () => {
-      fetchData(true)
-    }
-
-    const intervalId = setInterval(handleTick, tickDuration);
-
-    return () => clearInterval(intervalId)
   }, []);
 
   const fetchData = useCallback(async (tick) =>  {
@@ -57,7 +51,14 @@ function App() {
     fetchData(false);
     
     window.addEventListener('keydown', handleKeyDown);
+    const handleTick = () => {
+      fetchData(true)
+    }
+
+    const intervalId = setInterval(handleTick, tickDuration);
+
     return () => {
+      clearInterval(intervalId)
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [gameId]);
