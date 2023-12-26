@@ -1,29 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './Grid.css'
 
-export default function Grid() {
-  const handleKeyDown = (event) => {
-    // console.log("event pressed: "+event.key+" and "+event.keyCode);
-    if (event.key === "ArrowLeft" || event.keyCode === 37){
-      console.log("Left pressed");
-    }
-    if (event.key === "ArrowRight" || event.keyCode === 39){
-      console.log("Right pressed");
-    }
-    if (event.key === "ArrowDown" || event.keyCode === 40){
-      console.log("Down pressed");
-    }
-    if (event.key === "ArrowUp" || event.keyCode === 38){
-      console.log("Up pressed");
-    }
-  };
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+export default function Grid( { squares } ) {
+
+  function updateSquares(Game){
+    console.log(fetchData());
+  }
 
   let dims = [10,20];
   const generateKey = (row, col) => `${row}-${col}`;
@@ -32,7 +15,7 @@ export default function Grid() {
     for (let row = 0; row < dims[1]; row++){
       for (let col = 0; col < dims[0]; col++){
         const key = generateKey(row, col);
-        grid.push(<Square key={key} />);
+        grid.push(<Square key={key} color_ind={squares[row][col]}/>);
       }
     }
     return grid;
@@ -44,8 +27,9 @@ export default function Grid() {
   )
 }
 
-function Square(){
+function Square({ color_ind }){
+  let colors = ["505050", 'red', 'green'];
   return (
-    <div className='square'/>
+    <div style={{backgroundColor: colors[color_ind]}} className='square'/>
   )
 }
