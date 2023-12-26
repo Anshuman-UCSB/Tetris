@@ -38,11 +38,13 @@ def tick_game(game_id: int):
 def make_action(game_id: int, action: int):
 	if game_id not in games:
 		return {"error": f"game id {game_id} doesn't exist."}
+	if action == 0:
+		games[game_id].rotate()
 	if action == 3:
 		games[game_id].left()
 	if action == 1:
 		games[game_id].right()
-	if action == 0:
+	if action == 4:
 		games[game_id].drop()
 	return {"message":"success", "game_id":game_id, "game":games[game_id]}
 

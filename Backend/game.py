@@ -14,6 +14,19 @@ class Game:
 		choices = list("IOTJLSZ")
 		shuffle(choices)
 		return choices
+	def rotate2x3(self, piece):
+		center = [[10,0],[10,0]]
+		for x,y in piece:
+			center[0][0] = min(center[0][0], x)
+			center[0][1] = max(center[0][1], x)
+			center[1][0] = min(center[1][0], y)
+			center[1][1] = max(center[1][1], y)
+		cx = sum(center[0])/2
+		cy = sum(center[1])/2
+		self.activePiece = [(int(cx-(y-cy)),int((x-cx)+cy)) for x,y in self.activePiece]
+	def rotate(self):
+		self.rotate2x3(self.activePiece)
+		self.render()
 	def createPiece(self):
 		self.groundedTime = 2
 		self.activeType = self.nextPieces.pop(0)

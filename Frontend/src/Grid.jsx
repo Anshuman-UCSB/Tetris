@@ -32,7 +32,7 @@ function Square({ color_ind }){
     "L":"#91818A",
     "S":"#CA895F",
     "Z":"#CA3CFF",
-    "g": "#747a7a"
+    "g": "#a2a6a6"
   };
   return (
     <div style={{backgroundColor: colors[color_ind]}} className='square'/>

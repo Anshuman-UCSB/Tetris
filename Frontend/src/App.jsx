@@ -1,12 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
-import Grid from './Grid.jsx'
+import Grid from './Grid'
+import NextPiece from './Nextpiece'
 import './App.css'
 
 function App() {
   const [gameId, setGameId] = useState(null);
   const [squares, setSquares] = useState(Array(20).fill(Array(10).fill("bg")));
   const [alive, setAlive] = useState(true)
+  const [nextPiece, setNextPiece] = useState("")
+
   const backend_url = 'http://localhost:8000/';
+  const tickDuration = 500 // milliseconds 
+
   const updateGrid = (data) => {
     const nextSquares = squares.map(row => [...row]);
     for(let y = 0;y<20;y++){
@@ -15,7 +20,6 @@ function App() {
       }
     }
     setSquares(nextSquares);
-    console.log(data.game)
     setAlive(data.game.alive);
   }
   
@@ -28,22 +32,13 @@ function App() {
       }
   }
 
-  const tickDuration = 500 // milliseconds 
-  useEffect(() => {
-    const createNewGame = async () => {
-      const data = await request("game", {method: "PUT"})
-      console.log("setting game id", data.game_id)
-      setGameId(data.game_id);
-    };
-    createNewGame();
-  }, []);
-
   const fetchData = useCallback(async (tick) =>  {
     if(gameId === null){
       console.log("not fetching null game");
       return null;
     }
     const data = await request(`${tick ? "tick":"game"}?game_id=${gameId}`, {})
+    setNextPiece(data.game.nextPieces[0])
     updateGrid(data);
   }, [gameId]);
 
@@ -56,13 +51,25 @@ function App() {
     updateGrid(data);
   }, [gameId]);
 
+
+  useEffect(() => {
+    const createNewGame = async () => {
+      const data = await request("game", {method: "PUT"})
+      console.log("setting game id", data.game_id)
+      setGameId(data.game_id);
+    };
+    createNewGame();
+  }, []);
+  
   useEffect(() => {
     console.log("fetching game "+gameId);
     fetchData(false);
     
-    window.addEventListener('keydown', handleKeyDown);
+    if(alive){
+      window.addEventListener('keydown', handleKeyDown);
+    }
     const handleTick = () => {
-      if (alive) fetchData(true)
+      // if (alive) fetchData(true)
     }
 
     const intervalId = setInterval(handleTick, tickDuration);
@@ -90,18 +97,24 @@ function App() {
     }
     if (event.key === "ArrowUp" || event.keyCode === 38){
       console.log("Up pressed");
+      makeAction(0);
     }
     if (event.keyCode === 32){
       console.log("Spacebar pressed");
-      makeAction(0);
+      makeAction(4);
     }
   };
 
 
   return (
     <>
-      <h1>Tetris</h1>
-      {alive && <Grid squares = {squares}/>}
+      <h1>tARADtris</h1>
+      {
+        alive && <div className="game-container">
+          <Grid squares = {squares}/>
+          <NextPiece nextPiece={nextPiece}/>
+        </div>
+      }
       {
         !alive && <p>YOU LOSE</p>
       }
