@@ -11,6 +11,8 @@ class Game:
 		self.nextPieces = self.pieceBag()
 		self.groundedTime = 2
 		self.score = 0
+		self.combo = 0
+		self.messages = []
 		# id, color
 	def pieceBag(self):
 		choices = list("IOTJLSZ")
@@ -18,6 +20,7 @@ class Game:
 		return choices
 	def clearLines(self):
 		clearedLines = 0
+		self.messages = []
 		for y in range(19,-1,-1):
 			if all(v[0] == 1 for v in self.grid[y]):
 				clearedLines += 1
@@ -25,18 +28,27 @@ class Game:
 				if clearedLines:
 					for x in range(10):
 						self.grid[y+clearedLines][x],self.grid[y][x]=self.grid[y][x],[0,'bg']
+		if clearedLines > 0:
+			self.combo+=1
+			self.score += 50 * self.combo
+			if self.combo > 2:
+				self.messages.append(f"{self.combo}x combo!")
+			self.messages.append(f'{[None,"single", "double", "triple", "tetris!"][clearedLines]}')
+		else:
+			self.combo=0
+		self.score += [0,100,300,500,800][clearedLines]
 
 	def rotatePoint(self, point, center):
 		x,y = point
 		cx,cy = center
 		return (int(cx-(y-cy)),int((x-cx)+cy))
 	def rotate2x3(self, piece):
-		print(piece, self.center)
 		self.activePiece = [self.rotatePoint(p, self.center) for p in self.activePiece]
 	def rotate(self):
 		self.rotate2x3(self.activePiece)
 		self.render()
 	def createPiece(self):
+		self.clearLines()
 		self.groundedTime = 2
 		self.activeType = self.nextPieces.pop(0)
 		if len(self.nextPieces) < 7:
@@ -72,7 +84,6 @@ class Game:
 				return
 			self.grid[y][x] = [2,self.activeType]
 	def render(self):
-		self.clearLines()
 		if self.activePiece:
 			ghost = self.activePiece[:]
 			while all(y < 19 and self.grid[y+1][x][0]!=1 for x,y in ghost):
@@ -86,7 +97,6 @@ class Game:
 						self.grid[y][x] = [3,'g']
 					if (x,y) in self.activePiece:
 						self.grid[y][x] = [2,self.activeType]
-		print(self.activePiece)
 	def canMoveLeft(self):
 		return all(x > 0 and self.grid[y][x-1][0]!=1 for x,y in self.activePiece)
 	def canMoveRight(self):
@@ -108,6 +118,7 @@ class Game:
 		for x,y in self.activePiece:
 			self.grid[y][x] = [0,"bg"]
 		while self.canMoveDown():
+			self.score+=2
 			self.activePiece = [(x,y+1) for x,y in self.activePiece]
 		for x,y in self.activePiece:
 			self.grid[y][x] = [1, self.activeType]
@@ -120,6 +131,7 @@ class Game:
 			self.render()
 		else:
 			if self.canMoveDown():
+				self.score+=1
 				self.groundedTime = 2
 				self.activePiece = [(x,y+1) for x,y in self.activePiece]
 				self.center[1]+=1

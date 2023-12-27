@@ -5,8 +5,11 @@ import './App.css'
 
 function App() {
   const [gameId, setGameId] = useState(null);
+  const [gameNum, setGameNum] = useState(0);
   const [squares, setSquares] = useState(Array(20).fill(Array(10).fill("bg")));
   const [alive, setAlive] = useState(true)
+  const [score, setScore] = useState(0)
+  const [messages, setMessages] = useState([])
   const [nextPiece, setNextPiece] = useState("")
   const [pressedKeys, setPressedKeys] = useState({});
   const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
@@ -24,9 +27,11 @@ function App() {
     }
     setSquares(nextSquares);
     setAlive(data.game.alive);
+    setScore(data.game.score);
     setNextPiece(data.game.nextPieces[0])
+    setMessages(data.game.messages);
   }
-  
+  console.log("messages:", messages);
   const request = async (endpoint, data) => {
       try {
         const response = await fetch(backend_url+endpoint, data);
@@ -63,7 +68,7 @@ function App() {
       setGameId(data.game_id);
     };
     createNewGame();
-  }, []);
+  }, [gameNum]);
   
   useEffect(() => {
     console.log("fetching game "+gameId);
@@ -87,7 +92,6 @@ function App() {
 
   useEffect(() => {
     const handleInputs = () => {
-      console.log("inputs:", pressedKeys)
       if (pressedKeys[37] || keyFlags[37]){
         makeAction(3);
         keyFlags[37] = false;
@@ -148,14 +152,21 @@ function App() {
   return (
     <>
       <h1>tARADtris</h1>
+      <p>Score: {score}</p>
       {
         alive && <div className="game-container">
+          <div>
+            {messages && messages.map((msg, index)=>(<p key={window.crypto.randomUUID()}>{msg}</p>))}
+          </div>
           <Grid squares = {squares}/>
-          <NextPiece nextPiece={nextPiece} />
+            <NextPiece nextPiece={nextPiece} />
         </div>
       }
       {
-        !alive && <p>YOU LOSE</p>
+        !alive && <>
+          <p>YOU LOSE</p>
+          <button onClick={()=>setGameNum(gameNum+1)}>Play Again</button>
+        </>
       }
     </>
   )
