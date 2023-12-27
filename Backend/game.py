@@ -10,11 +10,22 @@ class Game:
 		self.alive = True
 		self.nextPieces = self.pieceBag()
 		self.groundedTime = 2
+		self.score = 0
 		# id, color
 	def pieceBag(self):
 		choices = list("IOTJLSZ")
 		shuffle(choices)
 		return choices
+	def clearLines(self):
+		clearedLines = 0
+		for y in range(19,-1,-1):
+			if all(v[0] == 1 for v in self.grid[y]):
+				clearedLines += 1
+			else:
+				if clearedLines:
+					for x in range(10):
+						self.grid[y+clearedLines][x],self.grid[y][x]=self.grid[y][x],[0,'bg']
+
 	def rotatePoint(self, point, center):
 		x,y = point
 		cx,cy = center
@@ -61,6 +72,7 @@ class Game:
 				return
 			self.grid[y][x] = [2,self.activeType]
 	def render(self):
+		self.clearLines()
 		if self.activePiece:
 			ghost = self.activePiece[:]
 			while all(y < 19 and self.grid[y+1][x][0]!=1 for x,y in ghost):
