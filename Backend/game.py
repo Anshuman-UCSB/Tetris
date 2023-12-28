@@ -6,6 +6,7 @@ class Game:
 		# 	self.grid[0][i] = (0,p)
 		self.activePiece = []
 		self.activeType = None
+		self.rotation = 0
 		self.center = None
 		self.alive = True
 		self.nextPieces = self.pieceBag()
@@ -42,15 +43,35 @@ class Game:
 		x,y = point
 		cx,cy = center
 		return (int(cx-(y-cy)),int((x-cx)+cy))
-	def rotate2x3(self, piece):
-		self.activePiece = [self.rotatePoint(p, self.center) for p in self.activePiece]
+	def wallKick(self):
+		def validPoint(p, aug):
+			x,y = p
+			return 0<=x<10 and 0<=y<20 and self.grid[y][x][0]!=1
+		wallKicks = [
+			[(0, 0), (-1, 0), (-1, 1), ( 0,-2), (-1,-2)],
+			[(0, 0), ( 1, 0), ( 1,-1), ( 0, 2), ( 1, 2)],
+			[(0, 0), ( 1, 0), ( 1, 1), ( 0,-2), ( 1,-2)],
+			[(0, 0), (-1, 0), (-1,-1), ( 0, 2), (-1, 2)],
+		] if self.activeType!='I' else [
+			[(0, 0), (-2, 0), ( 1, 0), (-2,-1), ( 1, 2)],
+			[(0, 0), (-1, 0), ( 2, 0), (-1, 2), ( 2,-1)],
+			[(0, 0), ( 2, 0), (-1, 0), ( 2, 1), (-1,-2)],
+			[(0, 0), ( 1, 0), (-2, 0), ( 1,-2), (-2, 1)],
+		]
+		for wk in wallKicks:
+			tmp = [(x+dx,y+dy) for x,y in self.activePiece for dx,dy in wk]
+			if all(validPoint(p) for p in tmp):
+				self.activePiece = tmp
+				return
 	def rotate(self):
-		self.rotate2x3(self.activePiece)
+		self.activePiece = [self.rotatePoint(p, self.center) for p in self.activePiece]
+		self.wallKick()
 		self.render()
 	def createPiece(self):
 		self.clearLines()
 		self.groundedTime = 2
 		self.activeType = self.nextPieces.pop(0)
+		self.rotation = 0
 		if len(self.nextPieces) < 7:
 			self.nextPieces+=self.pieceBag()
 		match(self.activeType):

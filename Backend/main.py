@@ -71,3 +71,7 @@ def delete_game(game_id: int):
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+if __name__=="__main__":
+	import uvicorn
+	uvicorn.run("app.app:app", host="0.0.0.0", reload=True)
