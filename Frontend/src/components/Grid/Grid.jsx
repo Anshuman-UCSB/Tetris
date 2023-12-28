@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import './Grid.css'
 
 
-export default function Grid( { squares } ) {
-  let dims = [10,20];
+export default function Grid( { squares, dims } ) {
+  
   const generateKey = (row, col) => `${row}-${col}`;
   const renderGrid = () => {
     const grid = [];
