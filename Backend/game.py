@@ -43,10 +43,11 @@ class Game:
 		x,y = point
 		cx,cy = center
 		return (int(cx-(y-cy)),int((x-cx)+cy))
-	def wallKick(self):
+	def wallKick(self, piece):
 		def validPoint(p, aug):
 			x,y = p
-			return 0<=x<10 and 0<=y<20 and self.grid[y][x][0]!=1
+			dx,dy = aug
+			return 0<=x+dx<10 and 0<=y+dy<20 and self.grid[y+dy][x+dx][0]!=1
 		wallKicks = [
 			[(0, 0), (-1, 0), (-1, 1), ( 0,-2), (-1,-2)],
 			[(0, 0), ( 1, 0), ( 1,-1), ( 0, 2), ( 1, 2)],
@@ -58,14 +59,19 @@ class Game:
 			[(0, 0), ( 2, 0), (-1, 0), ( 2, 1), (-1,-2)],
 			[(0, 0), ( 1, 0), (-2, 0), ( 1,-2), (-2, 1)],
 		]
-		for wk in wallKicks:
-			tmp = [(x+dx,y+dy) for x,y in self.activePiece for dx,dy in wk]
-			if all(validPoint(p) for p in tmp):
-				self.activePiece = tmp
-				return
+		print("rotated piece is ",piece)
+		for wk in wallKicks[self.rotation]:
+			if all(validPoint(p, wk) for p in piece):
+				self.rotation += 1
+				self.rotation %= 4
+				print(piece, wk)
+				self.center[0]+=wk[0]
+				self.center[1]+=wk[1]
+				return [(x+wk[0],y+wk[1]) for x,y in piece]
+		return None
 	def rotate(self):
-		self.activePiece = [self.rotatePoint(p, self.center) for p in self.activePiece]
-		self.wallKick()
+		print("rotating from value", self.rotation)
+		self.activePiece = self.wallKick([self.rotatePoint(p, self.center) for p in self.activePiece]) or self.activePiece
 		self.render()
 	def createPiece(self):
 		self.clearLines()
@@ -76,8 +82,8 @@ class Game:
 			self.nextPieces+=self.pieceBag()
 		match(self.activeType):
 			case "I":
-				self.activePiece = [(5,0),(6,0),(7,0),(4,0)]
-				self.center = [5.5,0.5]
+				self.activePiece = [(3,0),(4,0),(5,0),(6,0)]
+				self.center = [4.5,0.5]
 			case "O":
 				self.activePiece = [(5,0),(6,0),(5,1),(6,1)]
 				self.center = [5.5,.5]

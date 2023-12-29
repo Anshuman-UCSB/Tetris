@@ -17,7 +17,7 @@ function App() {
   const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
 
   const backend_url = "http://localhost:8000/";
-  const tickDuration = 500; // milliseconds
+  const tickDuration = 50000; // milliseconds
   const keyPollDuration = 50; // milliseconds
 
   const updateGrid = (data) => {
