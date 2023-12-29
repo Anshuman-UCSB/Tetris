@@ -46,6 +46,8 @@ def make_action(game_id: int, action: int):
 		games[game_id].right()
 	if action == 4:
 		games[game_id].drop()
+	if action == 5:
+		games[game_id].store()
 	return {"message":"success", "game_id":game_id, "game":games[game_id]}
 
 @app.put("/game")

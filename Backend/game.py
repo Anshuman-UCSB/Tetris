@@ -9,8 +9,10 @@ class Game:
 		self.rotation = 0
 		self.center = None
 		self.alive = True
+		self.stored = None
 		self.nextPieces = self.pieceBag()
 		self.groundedTime = 2
+		self.just_stored = False
 		self.score = 0
 		self.combo = 0
 		self.messages = []
@@ -19,6 +21,14 @@ class Game:
 		choices = list("IOTJLSZ")
 		shuffle(choices)
 		return choices
+	def store(self):
+		if self.just_stored: return
+		for x,y in self.activePiece:
+			self.grid[y][x] = [0, "bg"]
+		stored_type = self.stored
+		self.stored = self.activeType
+		self.createPiece(stored_type)
+		self.just_stored=True
 	def clearLines(self):
 		clearedLines = 0
 		self.messages = []
@@ -73,10 +83,10 @@ class Game:
 		print("rotating from value", self.rotation)
 		self.activePiece = self.wallKick([self.rotatePoint(p, self.center) for p in self.activePiece]) or self.activePiece
 		self.render()
-	def createPiece(self):
+	def createPiece(self, piece_type=None):
 		self.clearLines()
 		self.groundedTime = 2
-		self.activeType = self.nextPieces.pop(0)
+		self.activeType = piece_type or self.nextPieces.pop(0)
 		self.rotation = 0
 		if len(self.nextPieces) < 7:
 			self.nextPieces+=self.pieceBag()
@@ -110,6 +120,7 @@ class Game:
 				self.alive = False
 				return
 			self.grid[y][x] = [2,self.activeType]
+		self.render()
 	def render(self):
 		if self.activePiece:
 			ghost = self.activePiece[:]
@@ -150,12 +161,11 @@ class Game:
 		for x,y in self.activePiece:
 			self.grid[y][x] = [1, self.activeType]
 		self.createPiece()
-		self.render()
+		self.just_stored = False
 
 	def tick(self):
 		if not self.activePiece:
 			self.createPiece()
-			self.render()
 		else:
 			if self.canMoveDown():
 				self.score+=1
@@ -168,5 +178,5 @@ class Game:
 					for x,y in self.activePiece:
 						self.grid[y][x] = [1, self.activeType]
 					self.createPiece()
-					self.render()
+					self.just_stored=False
 				self.groundedTime -= 1
