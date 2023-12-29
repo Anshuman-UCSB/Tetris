@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Grid from "./components/Grid/Grid";
 import NextPiece from "./components/NextPiece/NextPiece";
+import Piece from "./components/Piece/Piece";
 import "./App.css";
 import PausedModal from "./components/Extras/PausedModal.jsx";
 
@@ -9,6 +10,7 @@ function App() {
   const [gameNum, setGameNum] = useState(0);
   const [squares, setSquares] = useState(Array(20).fill(Array(10).fill("bg")));
   const [alive, setAlive] = useState(true);
+  const [stored, setStored] = useState(null);
   const [paused, setPaused] = useState(false)
   const [score, setScore] = useState(0);
   const [messages, setMessages] = useState([]);
@@ -31,6 +33,7 @@ function App() {
     setAlive(data.game.alive);
     setScore(data.game.score);
     setNextPiece(data.game.nextPieces[0]);
+    setStored(data.game.stored);
     setMessages(data.game.messages);
   };
   console.log("messages:", messages);
@@ -181,6 +184,7 @@ function App() {
           <div>
             {messages && messages.map((msg, index) => <p key={index}>{msg}</p>)}
           </div>
+          <Piece piece={stored} />
           <Grid squares={squares} dims={[10, 20]} />
           <NextPiece nextPiece={nextPiece} />
         </div>

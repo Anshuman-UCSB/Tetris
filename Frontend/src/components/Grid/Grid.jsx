@@ -2,7 +2,6 @@ import './Grid.css'
 
 
 export default function Grid( { squares, dims } ) {
-  
   const generateKey = (row, col) => `${row}-${col}`;
   const renderGrid = () => {
     const grid = [];
@@ -35,5 +34,10 @@ export function Square({ color_ind }){
   };
   return (
     <div style={{backgroundColor: colors[color_ind]}} className='square'/>
+  )
+}
+export function EmptySquare({ color_ind }){
+  return (
+    <div className='empty-square'/>
   )
 }

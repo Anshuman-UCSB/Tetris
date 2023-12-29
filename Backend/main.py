@@ -61,6 +61,7 @@ def create_game(game_id: Union[int, None] = None):
 		if game_id in games:
 			return {"error": f"game id {game_id} already exists."}
 	games[game_id] = Game()
+	games[game_id].tick()
 	return {"message":"success", "game_id":game_id}
 
 @app.delete("/game")
