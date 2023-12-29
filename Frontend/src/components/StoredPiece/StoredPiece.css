@@ -1,0 +1,22 @@
+
+.flex-container {
+  display: flex;
+}
+
+.stored {
+  background-color: slategray;
+  min-width: 9rem;
+  min-height: 9rem;
+}
+
+.centered-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: auto;
+}
+
+.stored p {
+  margin-top: 2px;
+}

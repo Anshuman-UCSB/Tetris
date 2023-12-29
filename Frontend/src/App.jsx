@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Grid from "./components/Grid/Grid";
 import NextPiece from "./components/NextPiece/NextPiece";
 import Piece from "./components/Piece/Piece";
+import StoredPiece from "./components/StoredPiece/StoredPiece";
 import "./App.css";
 import PausedModal from "./components/Extras/PausedModal.jsx";
 
@@ -14,7 +15,7 @@ function App() {
   const [paused, setPaused] = useState(false)
   const [score, setScore] = useState(0);
   const [messages, setMessages] = useState([]);
-  const [nextPiece, setNextPiece] = useState("");
+  const [nextPieces, setNextPieces] = useState([]);
   const [pressedKeys, setPressedKeys] = useState({});
   const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
 
@@ -32,7 +33,7 @@ function App() {
     setSquares(nextSquares);
     setAlive(data.game.alive);
     setScore(data.game.score);
-    setNextPiece(data.game.nextPieces[0]);
+    setNextPieces(data.game.nextPieces);
     setStored(data.game.stored);
     setMessages(data.game.messages);
   };
@@ -105,7 +106,7 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [gameId, alive, nextPiece, paused]);
+  }, [gameId, alive, paused]);
 
   useEffect(() => {
     const handleInputs = () => {
@@ -182,11 +183,11 @@ function App() {
       {alive && (
         <div className="game-container">
           <div>
+            <StoredPiece piece={stored} />
             {messages && messages.map((msg, index) => <p key={index}>{msg}</p>)}
           </div>
-          <Piece piece={stored} />
           <Grid squares={squares} dims={[10, 20]} />
-          <NextPiece nextPiece={nextPiece} />
+          <NextPiece nextPieces={nextPieces} />
         </div>
       )}
       {!alive && (

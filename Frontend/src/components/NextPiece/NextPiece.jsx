@@ -2,16 +2,13 @@ import {Square} from "../Grid/Grid.jsx";
 import Piece from "../Piece/Piece.jsx";
 import './NextPiece.css'
 
-export default function NextPiece({ nextPiece }) {
-
+export default function NextPiece({ nextPieces }) {
     return (
         <>
             <div className="next">
-                {/* <div className="flex-container"> */}
-                    <Piece piece={nextPiece}/>
-                    {/* <Square className="img-square"></Square> */}
-                    <h1>{nextPiece}</h1>
-                {/* </div> */}
+                {nextPieces.slice(0,4).map((v, i)=>{
+                    return <Piece piece={v} key={i}/>
+                })}
             </div>
         </>
     )

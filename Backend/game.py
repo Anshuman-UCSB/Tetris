@@ -10,7 +10,7 @@ class Game:
 		self.center = None
 		self.alive = True
 		self.stored = None
-		self.nextPieces = self.pieceBag()
+		self.nextPieces = []
 		self.groundedTime = 2
 		self.just_stored = False
 		self.score = 0
@@ -19,6 +19,8 @@ class Game:
 		# id, color
 	def pieceBag(self):
 		choices = list("IOTJLSZ")
+		if self.nextPieces:
+			choices.remove(self.nextPieces[-1])
 		shuffle(choices)
 		return choices
 	def store(self):
@@ -84,12 +86,12 @@ class Game:
 		self.activePiece = self.wallKick([self.rotatePoint(p, self.center) for p in self.activePiece]) or self.activePiece
 		self.render()
 	def createPiece(self, piece_type=None):
+		if len(self.nextPieces) < 7:
+			self.nextPieces+=self.pieceBag()
 		self.clearLines()
 		self.groundedTime = 2
 		self.activeType = piece_type or self.nextPieces.pop(0)
 		self.rotation = 0
-		if len(self.nextPieces) < 7:
-			self.nextPieces+=self.pieceBag()
 		match(self.activeType):
 			case "I":
 				self.activePiece = [(3,0),(4,0),(5,0),(6,0)]
