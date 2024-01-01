@@ -176,9 +176,9 @@ function App() {
     
   };
 
-  return (
-    <Popup></Popup>
-  )
+  // return (
+  //   <Popup></Popup>
+  // )
 
   return (
     <>

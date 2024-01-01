@@ -57,7 +57,7 @@ def make_action(game_id: int, action: int, res: Response):
     return {"message": "success", "game_id": game_id, "game": games[game_id]}
 
 
-@app.put("/game", status_code=200)
+@app.put("/game", status_code=201)
 def create_game(res: Response, game_id: Union[int, None] = None):
     global n_uid
     if game_id == None:
