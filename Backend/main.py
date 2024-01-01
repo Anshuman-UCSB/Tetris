@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from game import Game
 
-# Run with: uvicorn main:app --reload
-
+# Run with: uvicorn main:app --reload 
+# or just call this file
 app = FastAPI()
 
 origins = [

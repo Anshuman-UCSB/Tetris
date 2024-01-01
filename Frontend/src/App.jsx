@@ -5,6 +5,7 @@ import Piece from "./components/Piece/Piece";
 import StoredPiece from "./components/StoredPiece/StoredPiece";
 import "./App.css";
 import PausedModal from "./components/Extras/PausedModal.jsx";
+import Popup from "./components/Popup/Popup.jsx";
 
 function App() {
   const [gameId, setGameId] = useState(null);
@@ -174,6 +175,10 @@ function App() {
     }
     
   };
+
+  return (
+    <Popup></Popup>
+  )
 
   return (
     <>

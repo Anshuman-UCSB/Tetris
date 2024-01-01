@@ -1,4 +1,3 @@
-import {Square} from "../Grid/Grid.jsx";
 import Piece from "../Piece/Piece.jsx";
 import './NextPiece.css'
 

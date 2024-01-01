@@ -47,9 +47,9 @@ export default function Piece({ piece }) {
             </div>,
         "J":<div>
             <div className="flex-container">
+                <EmptySquare/>
+                <EmptySquare/>
                 <Square color_ind="J"/>
-                <EmptySquare/>
-                <EmptySquare/>
             </div>
             <div className="flex-container">
                 <Square color_ind="J"/>
@@ -59,9 +59,9 @@ export default function Piece({ piece }) {
             </div>,
         "L":<div>
             <div className="flex-container">
-                <EmptySquare/>
-                <EmptySquare/>
                 <Square color_ind="L"/>
+                <EmptySquare/>
+                <EmptySquare/>
             </div>
             <div className="flex-container">
                 <Square color_ind="L"/>
