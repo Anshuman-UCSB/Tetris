@@ -88,7 +88,8 @@ class Game:
 	def createPiece(self, piece_type=None):
 		if len(self.nextPieces) < 7:
 			self.nextPieces+=self.pieceBag()
-		self.clearLines()
+		if piece_type is None:
+			self.clearLines()
 		self.groundedTime = 2
 		self.activeType = piece_type or self.nextPieces.pop(0)
 		self.rotation = 0

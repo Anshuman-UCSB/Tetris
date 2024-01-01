@@ -6,17 +6,21 @@
 .stored {
   background-color: slategray;
   min-width: 9rem;
-  min-height: 9rem;
+  /* min-height: 9rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
 }
 
 .centered-flex {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  padding: auto;
+  height: 9rem;
 }
 
 .stored p {
   margin-top: 2px;
+  position: absolute;
 }
