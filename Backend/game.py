@@ -1,4 +1,5 @@
-from random import shuffle
+from random import shuffle, random
+DEBUG = True
 class Game:
 	def __init__(self):
 		self.grid = [[[0,"bg"] for _ in range(10)] for _ in range(20)]
@@ -15,7 +16,13 @@ class Game:
 		self.just_stored = False
 		self.score = 0
 		self.combo = 0
-		self.messages = []
+		self.messages = {}
+		if DEBUG:
+			self.nextPieces = list("O"*100)
+			for y in range(9,20):
+				for x in range(10):
+					if x in (5,6): continue
+					self.grid[y][x]=[1,'I']
 		# id, color
 	def pieceBag(self):
 		choices = list("IOTJLSZ")
@@ -33,7 +40,7 @@ class Game:
 		self.just_stored=True
 	def clearLines(self):
 		clearedLines = 0
-		self.messages = []
+		self.messages = {}
 		for y in range(19,-1,-1):
 			if all(v[0] == 1 for v in self.grid[y]):
 				clearedLines += 1
@@ -44,9 +51,9 @@ class Game:
 		if clearedLines > 0:
 			self.combo+=1
 			self.score += 50 * self.combo
-			if self.combo > 2:
-				self.messages.append(f"{self.combo}x combo!")
-			self.messages.append(f'{[None,"single", "double", "triple", "tetris!"][clearedLines]}')
+			if self.combo > 0:
+				self.messages[random()] = f"{self.combo}x combo!"
+			self.messages[random()] = f'{[None,"single", "double", "triple", "tetris!"][clearedLines]}'
 		else:
 			self.combo=0
 		self.score += [0,100,300,500,800][clearedLines]

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Grid from "./components/Grid/Grid";
 import NextPiece from "./components/NextPiece/NextPiece";
-import Piece from "./components/Piece/Piece";
 import StoredPiece from "./components/StoredPiece/StoredPiece";
 import "./App.css";
 import PausedModal from "./components/Extras/PausedModal.jsx";
@@ -15,15 +14,15 @@ function App() {
   const [stored, setStored] = useState(null);
   const [paused, setPaused] = useState(false)
   const [score, setScore] = useState(0);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState({});
   const [nextPieces, setNextPieces] = useState([]);
   const [pressedKeys, setPressedKeys] = useState({});
   const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
 
+  console.log("messages:",messages);
   const backend_url = "http://localhost:8000/";
   const tickDuration = 500; // milliseconds
   const keyPollDuration = 50; // milliseconds
-
   const updateGrid = (data) => {
     const nextSquares = squares.map((row) => [...row]);
     for (let y = 0; y < 20; y++) {
@@ -36,7 +35,18 @@ function App() {
     setScore(data.game.score);
     setNextPieces(data.game.nextPieces);
     setStored(data.game.stored);
-    setMessages(data.game.messages);
+    Object.keys(data.game.messages).forEach(function(key, index) {
+      let content = data.game.messages[key];
+      data.game.messages[key] = <Popup key={key} content={content}/>
+    });
+    var combined = {...data.game.messages,...messages};
+    console.log(messages, combined);
+    // var filtered = Object.keys(combined).reduce(function (filtered, key) {
+    //     if (combined[key].showPopup == true) filtered[key] = dict[key];
+    //     return filtered;
+    // }, {});
+    // setMessages(combined);
+    setMessages((messages)=>({...messages, ...data.game.messages}));
   };
   const request = async (endpoint, data) => {
     try {
@@ -166,7 +176,7 @@ function App() {
           <div>
             <StoredPiece piece={stored} />
             <p>Score: {score}</p>
-            {messages && messages.map((msg, index) => <Popup key={index} content={msg}/>)}
+            {Object.values(messages)}
           </div>
           <Grid squares={squares} dims={[10, 20]} />
           <NextPiece nextPieces={nextPieces} />
