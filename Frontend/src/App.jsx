@@ -46,6 +46,7 @@ function App() {
       return response.json();
     } catch (err) {
       console.log("err: ", err);
+      setPaused(true);
     }
   };
 

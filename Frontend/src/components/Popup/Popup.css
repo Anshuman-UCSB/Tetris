@@ -10,3 +10,7 @@
     opacity: 1;
   }
 }
+
+.svg {
+  transform: scale(.4);
+}

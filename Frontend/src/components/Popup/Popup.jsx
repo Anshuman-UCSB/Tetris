@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import './Popup.css'
+import Single from  "../../../src/assets/single.svg?react"
+import Double from  "../../../src/assets/double.svg?react"
+import Triple from  "../../../src/assets/triple.svg?react"
+import Tetris from  "../../../src/assets/tetris.svg?react"
 
 export default function Popup({ content }) {
   const [showPopup, setShowPopup] = useState(true);
@@ -14,9 +18,16 @@ export default function Popup({ content }) {
     };
   }, []);
 
+  const svgs = {
+    "single":<Single className="popup svg"/>,
+    "double":<Double className="popup svg"/>,
+    "triple":<Triple className="popup svg"/>,
+    "tetris!":<Tetris className="popup svg"/>,
+  }
+
   return (
     <div className="container">
-      {showPopup && <p className="popup">{content}</p>}
+      {showPopup && (svgs[content]||<p className="popup">{content}</p>)}
     </div>
   );
 }
