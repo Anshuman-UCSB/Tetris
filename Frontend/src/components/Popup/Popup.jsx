@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import './Popup.css'
 
-export default function Popup() {
+export default function Popup({ content }) {
   const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
@@ -16,8 +16,7 @@ export default function Popup() {
 
   return (
     <div className="container">
-      {showPopup && <p className="popup">Your Popup Content</p>}
-      <div className="centeredBox">Centered Box Content</div>
+      {showPopup && <p className="popup">{content}</p>}
     </div>
   );
 }

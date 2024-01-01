@@ -38,7 +38,6 @@ function App() {
     setStored(data.game.stored);
     setMessages(data.game.messages);
   };
-  console.log("messages:", messages);
   const request = async (endpoint, data) => {
     try {
       const response = await fetch(backend_url + endpoint, data);
@@ -96,12 +95,12 @@ function App() {
       window.addEventListener("keyup", handleKeyUp);
     }
     const handleTick = () => {
-      if (alive) {
-        if (!paused) fetchData(true)
+      if (alive && !paused) {
+        fetchData(true);
       };
     };
-
     const intervalId = setInterval(handleTick, tickDuration);
+
     return () => {
       clearInterval(intervalId);
       window.removeEventListener("keydown", handleKeyDown);
@@ -137,7 +136,7 @@ function App() {
     }
     if (paused) return;
     if (event.repeat) return;
-    console.log("event pressed: " + event.key + " and " + event.keyCode);
+    // console.log("event pressed: " + event.key + " and " + event.keyCode);
 
     if ([37, 39, 40].includes(event.keyCode)) {
       setPressedKeys((prev) => ({ ...prev, [event.keyCode]: true }));
@@ -145,51 +144,29 @@ function App() {
       newFlags[event.keyCode] = true;
       setKeyFlags(newFlags);
     }
-    if (event.key === "ArrowLeft" || event.keyCode === 37) {
-      console.log("Left pressed");
-      // makeAction(3);
-    }
-    if (event.key === "ArrowRight" || event.keyCode === 39) {
-      console.log("Right pressed");
-      if (!pressedKeys[event.keyCode])
-        setPressedKeys((prev) => ({ ...prev, [event.keyCode]: true }));
-      // makeAction(1);
-    }
-    if (event.key === "ArrowDown" || event.keyCode === 40) {
-      console.log("Down pressed");
-      // fetchData(true);
-      if (!pressedKeys[event.keyCode])
-        setPressedKeys((prev) => ({ ...prev, [event.keyCode]: true }));
-    }
+
     if (event.key === "ArrowUp" || event.keyCode === 38) {
-      console.log("Up pressed");
       makeAction(0);
     }
     if (event.keyCode === 32) {
-      console.log("Spacebar pressed");
       makeAction(4);
     }
     if (event.key === "Shift" || event.keyCode === 16) {
-      console.log("Up pressed");
       makeAction(5);
     }
     
   };
 
-  // return (
-  //   <Popup></Popup>
-  // )
-
   return (
     <>
       <h1>tARADtris</h1>
-      <p>Score: {score}</p>
       <PausedModal show={paused}/>
       {alive && (
         <div className="game-container">
           <div>
             <StoredPiece piece={stored} />
-            {messages && messages.map((msg, index) => <p key={index}>{msg}</p>)}
+            <p>Score: {score}</p>
+            {messages && messages.map((msg, index) => <Popup key={index} content={msg}/>)}
           </div>
           <Grid squares={squares} dims={[10, 20]} />
           <NextPiece nextPieces={nextPieces} />
