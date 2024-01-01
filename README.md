@@ -56,19 +56,126 @@ Optionally you can build the application and serve it using any method you like
 ```
 ## API Reference
 
-#### Get all items
+## Get Game Details
+### `GET /game`
+Retrieve details for a specific game.
 
-```http
-  GET /game
-```
+#### Parameters
+- `game_id` (int): The unique identifier for the game.
 
-| Parameter | Type     | Description                | Returns JSON    | Error   |
-| :-------- | :------- | :------------------------- | :-------------- | :------ |
-| `game_id` | `string` | **Required**.              | {message, game_id, game_state} |{error} |
+#### Response
+- `200 OK`: Successful response.
+  ```json
+  {
+    "message": "success",
+    "game_id": <game_id>,
+    "game": <game_details>
+  }
+  ```
+- `404 Not Found`: If the specified `game_id` doesn't exist.
+  ```json
+  {
+    "message": {
+      "error": "game id <game_id> doesn't exist."
+    }
+  }
+  ```
 
-| Return Types | Value|
-| :----------- | :--- |
-| message      | "success" |
-| game_id      | int       |
-| game_state   | [Game](https://github.com/Anshuman-UCSB/Tetris/blob/main/Backend/game.py) |
-| error        | "game id {game_id} doesn't exist." |
+## Tick Game
+### `GET /tick`
+Advance the game state by one tick.
+
+#### Parameters
+- `game_id` (int): The unique identifier for the game.
+
+#### Response
+- `200 OK`: Successful response.
+  ```json
+  {
+    "message": "success",
+    "game_id": <game_id>,
+    "game": <updated_game_details>
+  }
+  ```
+- `404 Not Found`: If the specified `game_id` doesn't exist.
+  ```json
+  {
+    "message": {
+      "error": "game id <game_id> doesn't exist."
+    }
+  }
+  ```
+
+## Make Game Action
+### `PUT /action`
+Perform a specific action in the game.
+
+#### Parameters
+- `game_id` (int): The unique identifier for the game.
+- `action` (int): The action to be performed (0: Rotate, 1: Right, 3: Left, 4: Drop, 5: Store).
+
+#### Response
+- `200 OK`: Successful response.
+  ```json
+  {
+    "message": "success",
+    "game_id": <game_id>,
+    "game": <updated_game_details>
+  }
+  ```
+- `404 Not Found`: If the specified `game_id` doesn't exist.
+  ```json
+  {
+    "message": {
+      "error": "game id <game_id> doesn't exist."
+    }
+  }
+  ```
+
+## Create Game
+### `PUT /game`
+Create a new game.
+
+#### Parameters
+- `game_id` (int, optional): The unique identifier for the game. If not provided, a new identifier will be generated.
+
+#### Response
+- `201 Created`: Successful response.
+  ```json
+  {
+    "message": "success",
+    "game_id": <game_id>
+  }
+  ```
+- `404 Not Found`: If the specified `game_id` already exists.
+  ```json
+  {
+    "message": {
+      "error": "game id <game_id> already exists."
+    }
+  }
+  ```
+
+## Delete Game
+### `DELETE /game`
+Delete a specific game.
+
+#### Parameters
+- `game_id` (int): The unique identifier for the game.
+
+#### Response
+- `200 OK`: Successful response.
+  ```json
+  {
+    "message": "success",
+    "game_id": <game_id>
+  }
+  ```
+- `404 Not Found`: If the specified `game_id` doesn't exist.
+  ```json
+  {
+    "message": {
+      "error": "game id <game_id> doesn't exist."
+    }
+  }
+  ```
