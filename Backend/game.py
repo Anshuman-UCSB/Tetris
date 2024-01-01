@@ -1,5 +1,6 @@
 from random import shuffle, random
-DEBUG = True
+from time import time
+DEBUG = False
 class Game:
 	def __init__(self):
 		self.grid = [[[0,"bg"] for _ in range(10)] for _ in range(20)]
@@ -50,10 +51,11 @@ class Game:
 						self.grid[y+clearedLines][x],self.grid[y][x]=self.grid[y][x],[0,'bg']
 		if clearedLines > 0:
 			self.combo+=1
+			self.combo = min(self.combo, 10)
 			self.score += 50 * self.combo
-			if self.combo > 0:
-				self.messages[random()] = f"{self.combo}x combo!"
-			self.messages[random()] = f'{[None,"single", "double", "triple", "tetris!"][clearedLines]}'
+			if self.combo > 2:
+				self.messages[time()] = f"{self.combo}x combo!"
+			self.messages[time()] = f'{[None,"single", "double", "triple", "tetris!"][clearedLines]}'
 		else:
 			self.combo=0
 		self.score += [0,100,300,500,800][clearedLines]

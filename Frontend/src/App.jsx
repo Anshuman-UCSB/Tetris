@@ -19,7 +19,6 @@ function App() {
   const [pressedKeys, setPressedKeys] = useState({});
   const [keyFlags, setKeyFlags] = useState(Array(42).fill(false));
 
-  console.log("messages:",messages);
   const backend_url = "http://localhost:8000/";
   const tickDuration = 500; // milliseconds
   const keyPollDuration = 50; // milliseconds
@@ -39,14 +38,7 @@ function App() {
       let content = data.game.messages[key];
       data.game.messages[key] = <Popup key={key} content={content}/>
     });
-    var combined = {...data.game.messages,...messages};
-    console.log(messages, combined);
-    // var filtered = Object.keys(combined).reduce(function (filtered, key) {
-    //     if (combined[key].showPopup == true) filtered[key] = dict[key];
-    //     return filtered;
-    // }, {});
-    // setMessages(combined);
-    setMessages((messages)=>({...messages, ...data.game.messages}));
+    setMessages(data.game.messages);
   };
   const request = async (endpoint, data) => {
     try {
