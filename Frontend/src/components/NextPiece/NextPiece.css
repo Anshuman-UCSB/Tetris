@@ -8,5 +8,16 @@
   flex-direction: column;
   gap: 2rem;
   align-items: center;
-  min-width: 8rem;
+  min-width: 9rem;
+  background-color: slategray;
+  border-radius: 10px;
+}
+
+.padding {
+  min-height: 10px;
+}
+
+.next p {
+  margin-top: 2px;
+  position: absolute;
 }

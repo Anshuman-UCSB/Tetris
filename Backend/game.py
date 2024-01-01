@@ -71,18 +71,15 @@ class Game:
 			[(0, 0), ( 2, 0), (-1, 0), ( 2, 1), (-1,-2)],
 			[(0, 0), ( 1, 0), (-2, 0), ( 1,-2), (-2, 1)],
 		]
-		print("rotated piece is ",piece)
 		for wk in wallKicks[self.rotation]:
 			if all(validPoint(p, wk) for p in piece):
 				self.rotation += 1
 				self.rotation %= 4
-				print(piece, wk)
 				self.center[0]+=wk[0]
 				self.center[1]+=wk[1]
 				return [(x+wk[0],y+wk[1]) for x,y in piece]
 		return None
 	def rotate(self):
-		print("rotating from value", self.rotation)
 		self.activePiece = self.wallKick([self.rotatePoint(p, self.center) for p in self.activePiece]) or self.activePiece
 		self.render()
 	def createPiece(self, piece_type=None):
