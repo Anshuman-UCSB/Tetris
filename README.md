@@ -9,7 +9,7 @@ A brief description of what this project does and who it's for
 Clone the project
 
 ```bash
-  git clone https://github.com/Anshuman-UCSB/Tetris.git ./tetris
+  git clone https://github.com/Anshuman-UCSB/Tetris.git
 ```
 
 Go to the project directory
@@ -19,13 +19,11 @@ Go to the project directory
 ```
 
 ### Backend
-Install dependencies
+Install dependencies (recommend using virtual environment)
 
 ```bash
-  python -m venv ./venv
-  ./venv/Scripts/Your-activation-Scripts
-  cd ./Backend
-  pip intstall -r requirements.txt
+  cd Backend
+  pip install -r requirements.txt
 ```
 
 Start the server, this requires [uvicorn](https://www.uvicorn.org/)
@@ -34,11 +32,17 @@ Start the server, this requires [uvicorn](https://www.uvicorn.org/)
   uvicorn main:app --reload
 ```
 
+Alternatively, start the server using python
+
+```bash
+  python main.py
+```
+
 ### Frontend
 Install dependencies
 
 ```bash
-  cd ./Frontend
+  cd Frontend
   npm install
 ```
 
@@ -52,7 +56,6 @@ Optionally you can build the application and serve it using any method you like
 
 ```bash
   npm run build
-  cd ./dist
 ```
 ## API Reference
 
