@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import Playable from "./components/Playable/Playable.jsx"
 
 function App() {
-  return <p className='text-green-400 font-bold text-3xl'>test</p>
+  return <div className='bg-slate-500 h-screen w-screen'>
+    <Playable/>
+  </div>
 }
 
 export default App
