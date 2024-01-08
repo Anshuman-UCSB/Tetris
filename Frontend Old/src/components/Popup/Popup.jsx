@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import './Popup.css'
-import Single from  "../../../src/assets/single.svg?react"
-import Double from  "../../../src/assets/double.svg?react"
-import Triple from  "../../../src/assets/triple.svg?react"
-import Tetris from  "../../../src/assets/tetris.svg?react"
+import Single from  "../../assets/single.svg?react"
+import Double from  "../../assets/double.svg?react"
+import Triple from  "../../assets/triple.svg?react"
+import Tetris from  "../../assets/tetris.svg?react"
 
 export default function Popup({ content }) {
   const [showPopup, setShowPopup] = useState(true);

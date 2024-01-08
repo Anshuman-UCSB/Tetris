@@ -1,0 +1,22 @@
+.square {
+  border: 1px solid #999;
+  /* background: #505050; */
+  width: 30px;
+  height: 30px;
+}
+.empty-square {
+  width: 30px;
+  height: 30px;
+  margin: 1px;
+}
+
+.error-msg {
+  color: red;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10,30px);
+  grid-template-rows: repeat(20,30px);
+  grid-gap: 1px
+}
