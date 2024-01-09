@@ -15,10 +15,10 @@ function Playable(){
 	}, []);
 
 	return (
-		<div className="flex flex-col p-3 space-y-3 w-full h-full items-center">
+		<div className="flex flex-col p-10 space-y-3 w-full h-full items-center">
 			<h1 className="font-mono flex-none text-5xl font-extrabold text-slate-200">Taradtris</h1>
 			{gameId ? 
-				<div className="grow">
+				<div className="w-full grow">
 					<Game gameId={gameId}/>
 				</div>
 				:

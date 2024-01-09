@@ -11,7 +11,7 @@ function Grid({ squares }){
 	
 	return (
 		// <div className="w-full h-full">
-			<div className="grid grid-cols-[repeat(10,1fr)] grid-rows-[repeat(20,1fr)]">
+			<div className="grid grid-cols-[repeat(10,30px)] grid-rows-[repeat(20,30px)]">
 				{grid}
 			</div>
 		// </div>
