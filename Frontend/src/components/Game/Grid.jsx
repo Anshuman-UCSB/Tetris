@@ -6,9 +6,9 @@ function Grid({ squares }){
 	for (let row = 0; row < 20; row++){
 		const r = [];
 		for (let col = 0; col < 10; col++){
-			r.push(<Square key={`${row}-${col}`} color_ind={"IOLZ"[Math.floor(Math.random() * 4)]}/>);
+			r.push(<Square key={`${row}-${col}`} color_ind={squares[row][col]}/>);
 		}
-		grid.push(<div className="flex">
+		grid.push(<div key={`${row}`} className="flex">
 			{r}
 		</div>);
 	}

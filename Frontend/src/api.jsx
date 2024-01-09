@@ -17,10 +17,10 @@ export const registerGame = async () => {
 	}
 }
 
-export const fetchGame = async () => {
+export const fetchGame = async (gameId) => {
 	try {
 		console.log("Sending request");
-		const response = await apiService.get('/game');
+		const response = await apiService.get(`/game?game_id=${gameId}`);
 		return response.data;
 	} catch (error) {
 		throw error;

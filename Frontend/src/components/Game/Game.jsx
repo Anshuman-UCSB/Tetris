@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from "react";
+import { fetchGame } from "../../api";
 import Grid from "./Grid"
 
 function Game({gameId}){
+	const [squares, setSquares] = useState(Array(20).fill(Array(10).fill('bg')))
+	console.log("Game id in game is",gameId);
+	console.log("squares is",squares);
+	useEffect(()=>{
+		const getGame = async (gameId) =>{
+			const result = await fetchGame(gameId);
+			console.log("fetched data",result);
+			setSquares(result.game.grid.map((r,i)=>(r.map((v,j)=>(v[1])))));
+		}
+		getGame(gameId);
+	},[gameId])
 	return (
 	<div className="h-full">
-		<Grid squares={null}/>
+		<Grid squares={squares}/>
 	</div>
-	// <div className="w-full h-full inline-block">
-	// 	<div className="bg-slate-50 flex h-full">
-	// 		<div className="bg-red-300 grow"></div>
-	// 		<div className="bg-blue-300 grow-2"><Grid squares={null}/></div>
-	// 		<div className="bg-green-300 grow"></div>
-	// 	</div>
-	// </div>
 	);
 }
 

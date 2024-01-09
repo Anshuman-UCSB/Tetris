@@ -8,7 +8,7 @@ function Playable(){
 	useEffect(() => {
 		const createNewGame = async () => {
 			const result = await registerGame();
-			console.log(result);
+			console.log("Got game id", result);
 			setGameId(result['game_id']);
 		};
 		createNewGame();
