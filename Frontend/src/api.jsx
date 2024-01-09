@@ -16,3 +16,13 @@ export const registerGame = async () => {
 		throw error;
 	}
 }
+
+export const fetchGame = async () => {
+	try {
+		console.log("Sending request");
+		const response = await apiService.get('/game');
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}

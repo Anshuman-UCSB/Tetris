@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(20, 1fr); /* Adjust the row fraction as needed */
+      padding: 10px; /* Adjust the padding as needed */
+    }
+
+    .grid-item {
+      background-color: #3498db; /* Change the background color as needed */
+      padding-bottom: 100%; /* Maintain a 1:1 aspect ratio */
+      position: relative;
+    }
+
+    .grid-item > div {
+      position: absolute;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="grid-container">
+  <!-- You can repeat this block to create more items in the grid -->
+  <div class="grid-item"><div>1</div></div>
+  <div class="grid-item"><div>2</div></div>
+  <div class="grid-item"><div>3</div></div>
+  <!-- ... Repeat as needed ... -->
+</div>
+
+</body>
+</html>
