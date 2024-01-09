@@ -15,10 +15,12 @@ function Playable(){
 	}, []);
 
 	return (
-		<div className="flex flex-col p-3 space-y-3 items-center">
-			<h1 className="font-mono text-5xl font-extrabold">Tetris</h1>
+		<div className="flex flex-col p-3 space-y-3 w-full h-full items-center">
+			<h1 className="font-mono flex-none text-5xl font-extrabold">Tetris</h1>
 			{gameId ? 
-				<Game width="60vw" height="80vh"/>
+				<div className="grow w-full aspect-square">
+					<Game/>
+				</div>
 				:
 				<p className="text-center">Connecting to server...</p>}
 		</div>
