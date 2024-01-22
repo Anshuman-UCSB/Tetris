@@ -16,6 +16,6 @@ export function Square({ color_ind }){
 }
 export function EmptySquare({ color_ind }){
   return (
-    <div className='empty-square'/>
+    <div className="border border-transparent aspect-square w-full h-full"/>
   )
 }

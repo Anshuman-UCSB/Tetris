@@ -6,9 +6,8 @@ import NextPiece from "./NextPiece";
 function Game({game}){
 	console.log("game is ",game);
 	return (
-		<div className="flex h-full">
-			{/* <NextPiece nextPieces={game.nextPieces}/> */}
-			<h1 className="font-mono flex-none text-5xl font-extrabold text-slate-200">Taradtris</h1>
+		<div className="flex grow h-full gap-2">
+			<NextPiece nextPieces={game.nextPieces}/>
 			<Grid squares={game.grid.map((r,i)=>(r.map((v,j)=>(v[1]))))}/>
 		</div>
 	);
