@@ -11,7 +11,7 @@ export function Square({ color_ind }){
     "g": "#a2a6a6"
   };
   return (
-    <div style={{backgroundColor: colors[color_ind]}} className='border-[1px] grow pt-[10%] w-full '/>
+    <div style={{backgroundColor: colors[color_ind]}} className="bg-gray-300 border border-gray-400 aspect-square w-full h-full"/>
   )
 }
 export function EmptySquare({ color_ind }){

@@ -21,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# TODO: add timeouts and clean up games
 games = {}
 n_uid = 0
 
