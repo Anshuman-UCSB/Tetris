@@ -17,8 +17,8 @@ function Grid({ squares }){
 	}
 	
 	return (
-		<div className="flex items-center justify-center h-full">
-			<div className="grid grid-cols-10 gap-0 aspect-[1/2] h-full">
+		<div className="flex items-center justify-center w-full h-full">
+			<div className="grid grid-cols-10 gap-0 aspect-[1/2] h-full w-full min-w-[40vh]">
 				{grid}
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 from random import shuffle, random
 from time import time
-DEBUG = True
+DEBUG = False
 class Game:
 	def __init__(self):
 		self.grid = [[[0,"bg"] for _ in range(10)] for _ in range(20)]
