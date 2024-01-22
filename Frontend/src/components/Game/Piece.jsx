@@ -1,11 +1,10 @@
 import {Square, EmptySquare} from "./Squares";
-// import './Piece.css'
 
 export default function Piece({ piece }) {
     return (
-    <div className="w-11/12">
+    <div className="w-11/12 h-full">
         {{
-        "O":<div className="w-1/2 mx-auto">
+        "O":<div className="w-1/2 m-auto">
                 <div className="flex">
                     <Square color_ind="O"/>
                     <Square color_ind="O"/>
@@ -15,7 +14,7 @@ export default function Piece({ piece }) {
                     <Square color_ind="O"/>
                 </div>
             </div>,
-        "Z":<div className="w-3/4 mx-auto">
+        "Z":<div className="w-3/4 m-auto">
             <div className="flex">
                 <Square color_ind="Z"/>
                 <Square color_ind="Z"/>
@@ -27,7 +26,7 @@ export default function Piece({ piece }) {
                 <Square color_ind="Z"/>
             </div>
             </div>,
-        "S":<div className="w-3/4 mx-auto">
+        "S":<div className="w-3/4 m-auto">
             <div className="flex">
                 <EmptySquare/>
                 <Square color_ind="S"/>
@@ -39,7 +38,7 @@ export default function Piece({ piece }) {
                 <EmptySquare/>
             </div>
             </div>,
-        "I":<div className="w-1/1 mx-auto">
+        "I":<div className="w-1/1 m-auto">
             <div className="flex">
                 <Square color_ind="I"/>
                 <Square color_ind="I"/>
@@ -47,7 +46,7 @@ export default function Piece({ piece }) {
                 <Square color_ind="I"/>
             </div>
             </div>,
-        "J":<div className="w-3/4 mx-auto">
+        "J":<div className="w-3/4 m-auto">
             <div className="flex">
                 <EmptySquare/>
                 <EmptySquare/>
@@ -59,7 +58,7 @@ export default function Piece({ piece }) {
                 <Square color_ind="J"/>
             </div>
             </div>,
-        "L":<div className="w-3/4 mx-auto">
+        "L":<div className="w-3/4 m-auto">
             <div className="flex">
                 <Square color_ind="L"/>
                 <EmptySquare/>
@@ -71,7 +70,7 @@ export default function Piece({ piece }) {
                 <Square color_ind="L"/>
             </div>
             </div>,
-        "T":<div className="w-3/4 mx-auto">
+        "T":<div className="w-3/4 m-auto">
             <div className="flex">
                 <EmptySquare/>
                 <Square color_ind="T"/>
