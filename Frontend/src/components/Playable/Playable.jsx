@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { registerGame } from "../../api";
 import PlayableGame from "../Playable/PlayableGame"
+import KeyListener from "../Extras/KeyListener"
 
 function Playable(){
 	const [gameId, setGameId] = useState(null);
+	const tickDuration = 500; // milliseconds
 	
 	useEffect(() => {
 		const createNewGame = async () => {
@@ -20,9 +22,10 @@ function Playable(){
 			{gameId !== null ? 
 				<div className="grow">
 					<PlayableGame gameId={gameId}/>
+					<KeyListener gameId={gameId}/>
 				</div>
 				:
-				<p className="text-center">Connecting to server...</p>}
+				<p className="text-center text-white">Connecting to server...</p>}
 		</div>
 	);
 }

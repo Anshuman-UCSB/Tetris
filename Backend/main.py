@@ -54,6 +54,8 @@ def make_action(game_id: int, action: int, res: Response):
         games[game_id].left()
     if action == 1:
         games[game_id].right()
+    if action == 2:
+        games[game_id].tick()
     if action == 4:
         games[game_id].drop()
     if action == 5:

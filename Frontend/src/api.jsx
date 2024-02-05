@@ -26,3 +26,13 @@ export const fetchGame = async (gameId) => {
 		throw error;
 	}
 }
+
+export const makeAction = async (gameId, action) => {
+	try {
+		console.log("Sending request");
+		const response = await apiService.put(`/action?game_id=${gameId}&action=${action}`);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}
